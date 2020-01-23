@@ -1,8 +1,4 @@
 import * as functions from 'firebase-functions';
-//const cheerio = require('cheerio');
-//const cors = require('cors')({ origin: true });
-//const fetch = require('node-fetch');
-//const puppeteer = require('puppeteer');
 
 export const helloWorld = functions.https.onRequest(async (request, response) => {
   const stockxAPI = require('stockx-api');
