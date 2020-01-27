@@ -7,8 +7,8 @@ export const helloWorld = functions.https.onRequest(async (request, response) =>
    
   await stockX.searchProducts(request.url.substring(1), {
     limit: 1
-  }).then(products => info = parseResponse(products))
-  .then(console.log(info));
+  }).then(async products => info = await parseResponse(products));
+  response.send(info)
 });
 
 async function parseResponse(product) {
@@ -31,11 +31,13 @@ async function parseResponse(product) {
     resolveWithFullResponse: true
 };
 
-const res = await request(requestOptions);
+  const res = await request(requestOptions);
 
-const body = JSON.parse(res.body); 
-console.log(body.Product.title);
-return {
-
+  const body = JSON.parse(res.body); 
+  console.log(body.Product.title);
+  return {
+    "name": body.Product.title,
+    "price": body.Product.market.averageDeadstockPrice,
+    "img-url": body.Product.media["360"][0]
+  };
 };
-}
